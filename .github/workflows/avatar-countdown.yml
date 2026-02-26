@@ -1,0 +1,32 @@
+name: Avatar 4 Countdown
+
+on:
+  schedule:
+    - cron: "0 9 * * *"  # Tous les jours à 09h UTC
+  workflow_dispatch:
+
+jobs:
+  countdown:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send countdown to Discord
+        run: |
+          TARGET_DATE="2029-12-21"
+          TODAY=$(date -u +"%Y-%m-%d")
+
+          DIFF=$(( ( $(date -d $TARGET_DATE +%s) - $(date -d $TODAY +%s) ) / 86400 ))
+
+          if [ $DIFF -gt 0 ]; then
+            MESSAGE="🌊 Plus que $DIFF jours avant la sortie d'Avatar 4 !"
+          elif [ $DIFF -eq 0 ]; then
+            MESSAGE="🔥 AVATAR 4 SORT AUJOURD'HUI !!!"
+          else
+            echo "La date est passée. Arrêt."
+            exit 0
+          fi
+
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d "{\"content\":\"$MESSAGE\"}" \
+               ${{ secrets.DISCORD_WEBHOOK }}
