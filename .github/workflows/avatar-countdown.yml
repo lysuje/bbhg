@@ -18,7 +18,7 @@ jobs:
           DIFF=$(( ( $(date -d $TARGET_DATE +%s) - $(date -d $TODAY +%s) ) / 86400 ))
 
           if [ $DIFF -gt 0 ]; then
-            MESSAGE="🌊 Plus que $DIFF jours avant la sortie d'Avatar 4 !"
+            MESSAGE="<< Chaque jour nous rapproche un peu plus de Pandora. Le voyage n’est pas terminé… il ne fait que commencer. Plus que $DIFF jours avant la sortie d'Avatar : The Tulkun Rider ✨ >>"
           elif [ $DIFF -eq 0 ]; then
             MESSAGE="🔥 AVATAR 4 SORT AUJOURD'HUI !!!"
           else
